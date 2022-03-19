@@ -1,0 +1,3 @@
+package block.interview.takehome.etiennemoiroux.presentation
+
+interface MviIntent

@@ -1,14 +1,8 @@
-package block.interview.takehome.etiennemoiroux
+package mvi.compose.planets
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import block.interview.takehome.etiennemoiroux.data.EmployeesResponse
-import block.interview.takehome.etiennemoiroux.data.IEmployeesRepository
-import block.interview.takehome.etiennemoiroux.data.mock.MockEmployeeDataSet
-import block.interview.takehome.etiennemoiroux.presentation.employees.EmployeesViewModel
-import block.interview.takehome.etiennemoiroux.presentation.employees.EmployeesScreenIntent
-import block.interview.takehome.etiennemoiroux.presentation.employees.EmployeesScreenState
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +11,12 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
+import mvi.compose.planets.data.IPlanetRepository
+import mvi.compose.planets.data.PlanetResponse
+import mvi.compose.planets.data.mock.MockPlanetDataSet
+import mvi.compose.planets.presentation.planet.PlanetScreenIntent
+import mvi.compose.planets.presentation.planet.PlanetScreenState
+import mvi.compose.planets.presentation.planet.PlanetViewModel
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
@@ -28,9 +28,9 @@ import org.hamcrest.core.Is.`is` as iz
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
-class EmployeeStateTest {
-    private val mockRepository: IEmployeesRepository = mock()
-    private lateinit var viewModel: EmployeesViewModel
+class PlanetStateTest {
+    private val mockRepository: IPlanetRepository = mock()
+    private lateinit var viewModel: PlanetViewModel
 
     @ExperimentalCoroutinesApi
     var coroutineDispatcher = TestCoroutineDispatcher()
@@ -42,7 +42,7 @@ class EmployeeStateTest {
     fun setUp() {
         Dispatchers.setMain(coroutineDispatcher)
 
-        viewModel = EmployeesViewModel(
+        viewModel = PlanetViewModel(
             mockRepository,
             coroutineDispatcher
         )
@@ -53,7 +53,7 @@ class EmployeeStateTest {
         viewModel.state.observeForTesting { observer ->
             assertThat(
                 viewModel.state.value,
-                iz(EmployeesScreenState.Loading)
+                iz(PlanetScreenState.Loading)
             ) // initial should be loading
             assertThat(observer.values.size, iz(1)) // only 1 postValue(..)
         }
@@ -62,17 +62,17 @@ class EmployeeStateTest {
     @Test
     fun `test success state`() {
         coroutineDispatcher.runBlockingTest {
-            whenever(mockRepository.getEmployees())
-                .thenReturn(Response.success(EmployeesResponse(MockEmployeeDataSet.employees)))
+            whenever(mockRepository.getPlanet())
+                .thenReturn(Response.success(PlanetResponse(MockPlanetDataSet.planets)))
         }
 
         viewModel.state.observeForTesting { observer ->
-            assertThat(viewModel.state.value is EmployeesScreenState.Loading, iz(true))
-            viewModel.processIntents(EmployeesScreenIntent.Load)
-            assertThat(viewModel.state.value is EmployeesScreenState.Success, iz(true))
+            assertThat(viewModel.state.value is PlanetScreenState.Loading, iz(true))
+            viewModel.processIntents(PlanetScreenIntent.Load)
+            assertThat(viewModel.state.value is PlanetScreenState.Success, iz(true))
             assertThat(
-                (viewModel.state.value as EmployeesScreenState.Success).employees.size,
-                iz(MockEmployeeDataSet.employees.size)
+                (viewModel.state.value as PlanetScreenState.Success).planets.size,
+                iz(MockPlanetDataSet.planets.size)
             )
             assertThat(
                 observer.values.size,
@@ -85,16 +85,16 @@ class EmployeeStateTest {
     @Test
     fun `test success state with 2 malformed employees`() {
         coroutineDispatcher.runBlockingTest {
-            whenever(mockRepository.getEmployees())
-                .thenReturn(Response.success(EmployeesResponse(MockEmployeeDataSet.malformedEmployees)))
+            whenever(mockRepository.getPlanet())
+                .thenReturn(Response.success(PlanetResponse(MockPlanetDataSet.planets)))
         }
 
         viewModel.state.observeForTesting { observer ->
-            assertThat(viewModel.state.value is EmployeesScreenState.Loading, iz(true))
-            viewModel.processIntents(EmployeesScreenIntent.Load)
-            assertThat(viewModel.state.value is EmployeesScreenState.Success, iz(true))
+            assertThat(viewModel.state.value is PlanetScreenState.Loading, iz(true))
+            viewModel.processIntents(PlanetScreenIntent.Load)
+            assertThat(viewModel.state.value is PlanetScreenState.Success, iz(true))
             assertThat(
-                (viewModel.state.value as EmployeesScreenState.Success).employees.size,
+                (viewModel.state.value as PlanetScreenState.Success).planets.size,
                 iz(1)
             )
             assertThat(
@@ -108,14 +108,14 @@ class EmployeeStateTest {
     @Test
     fun `test empty state`() {
         coroutineDispatcher.runBlockingTest {
-            whenever(mockRepository.getEmployees())
-                .thenReturn(Response.success(EmployeesResponse(MockEmployeeDataSet.emptyEmployees)))
+            whenever(mockRepository.getPlanet())
+                .thenReturn(Response.success(PlanetResponse(MockPlanetDataSet.planets)))
         }
 
         viewModel.state.observeForTesting {
-            assertThat(viewModel.state.value is EmployeesScreenState.Loading, iz(true))
-            viewModel.processIntents(EmployeesScreenIntent.Load)
-            assertThat(viewModel.state.value is EmployeesScreenState.Empty, iz(true))
+            assertThat(viewModel.state.value is PlanetScreenState.Loading, iz(true))
+            viewModel.processIntents(PlanetScreenIntent.Load)
+            assertThat(viewModel.state.value is PlanetScreenState.Empty, iz(true))
             coroutineDispatcher.resumeDispatcher()
         }
     }

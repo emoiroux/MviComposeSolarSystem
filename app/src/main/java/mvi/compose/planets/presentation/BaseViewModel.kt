@@ -1,15 +1,15 @@
-package block.interview.takehome.etiennemoiroux.presentation
+package mvi.compose.planets.presentation
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import block.interview.takehome.etiennemoiroux.presentation.employees.EmployeesViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
+import mvi.compose.planets.presentation.planet.PlanetViewModel
 
 abstract class BaseViewModel<S : MviState, I : MviIntent>(private val defaultDispatcher: CoroutineDispatcher) :
     ViewModel() {
@@ -26,7 +26,7 @@ abstract class BaseViewModel<S : MviState, I : MviIntent>(private val defaultDis
 
     protected suspend fun updateState(handler: suspend () -> S) {
         val newState = handler()
-        Log.i(EmployeesViewModel::class.simpleName, newState.name)
+        Log.i(PlanetViewModel::class.simpleName, newState.name)
         _state.postValue(newState)
     }
 

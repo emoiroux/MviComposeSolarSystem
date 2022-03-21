@@ -1,4 +1,4 @@
-package block.interview.takehome.etiennemoiroux.ui.theme
+package mvi.compose.planets.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

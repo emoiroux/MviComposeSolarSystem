@@ -1,4 +1,4 @@
-package block.interview.takehome.etiennemoiroux
+package mvi.compose.planets
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

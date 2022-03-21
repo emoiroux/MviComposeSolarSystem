@@ -1,4 +1,4 @@
-package block.interview.takehome.etiennemoiroux.ui
+package mvi.compose.planets.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,34 +14,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
-import block.interview.takehome.etiennemoiroux.R
-import block.interview.takehome.etiennemoiroux.data.mock.MockEmployeeDataSet
-import block.interview.takehome.etiennemoiroux.model.EmployeeModel
-import block.interview.takehome.etiennemoiroux.presentation.employees.EmployeesScreenState
-import block.interview.takehome.etiennemoiroux.ui.theme.InterviewEienneMoirouxTheme
+import mvi.compose.planets.model.PlanetModel
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-
-const val DEBUG_EMPLOYEE_SCREEN: Boolean = false
+import mvi.compose.planets.R
+import mvi.compose.planets.data.mock.MockPlanetDataSet
+import mvi.compose.planets.presentation.planet.PlanetScreenState
+import mvi.compose.planets.ui.theme.PlanetsTheme
 
 @Composable
-fun EmployeesScreen(state: LiveData<EmployeesScreenState>, reload: () -> Unit) {
+fun PlanetScreen(state: LiveData<PlanetScreenState>, reload: () -> Unit) {
     val screenStateValue = state.observeAsState().value
 
-    InterviewEienneMoirouxTheme {
+    PlanetsTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
         ) {
             when (screenStateValue) {
-                is EmployeesScreenState.Loading -> EmployeesLoadingScreen()
-                is EmployeesScreenState.Error -> EmployeesErrorScreen(
+                is PlanetScreenState.Loading -> EmployeesLoadingScreen()
+                is PlanetScreenState.Error -> EmployeesErrorScreen(
                     reload,
                     screenStateValue.error
                 )
-                is EmployeesScreenState.Success ->
-                    EmployeesListScreen(reload, screenStateValue.employees)
-                is EmployeesScreenState.Empty -> EmployeesEmptyScreen()
+                is PlanetScreenState.Success ->
+                    EmployeesListScreen(reload, screenStateValue.planets)
+                is PlanetScreenState.Empty -> EmployeesEmptyScreen()
                 else -> null
             }
         }
@@ -63,11 +61,11 @@ private fun EmployeesEmptyScreen() {
 @Composable
 private fun EmployeesListScreen(
     reload: () -> Unit,
-    employees: List<EmployeeModel>
+    planets: List<PlanetModel>
 ) {
     Column {
         ReloadButton(reload)
-        EmployeeList(employees)
+        EmployeeList(planets)
     }
 }
 
@@ -106,17 +104,17 @@ fun ReloadButton(reload: () -> Unit) {
 }
 
 @Composable
-fun EmployeeList(employees: List<EmployeeModel>) {
+fun EmployeeList(planets: List<PlanetModel>) {
     LazyColumn(modifier = Modifier.padding(8.dp)) {
-        items(employees.size) { employeeIndex ->
-            EmployeeCard(employees[employeeIndex])
+        items(planets.size) { employeeIndex ->
+            EmployeeCard(planets[employeeIndex])
             Spacer(modifier = Modifier.height(5.dp))
         }
     }
 }
 
 @Composable
-fun EmployeeCard(it: EmployeeModel) {
+fun EmployeeCard(it: PlanetModel) {
     Card(
         backgroundColor = Color.LightGray.copy(alpha = 0.8f), modifier = Modifier
             .fillMaxWidth()
@@ -126,21 +124,15 @@ fun EmployeeCard(it: EmployeeModel) {
             modifier = Modifier
                 .padding(15.dp)
         ) {
-            Text("${it.full_name}  |  ${it.team}", Modifier.align(Alignment.CenterHorizontally))
+            Text("${it.name} | ${it.distance}", Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = Modifier.height(5.dp))
-            it.photo_url_small?.let { smallImage -> EmployeeImage(smallImage) }
+            Text("url : ${it.image}")
+            it.image?.let { image -> EmployeeImage(image) }
             Spacer(modifier = Modifier.height(5.dp))
-            Text("Email : ${it.email_address}")
-            it.phone_number?.let { phoneNumber -> Text("Phone : $phoneNumber") }
-            Text("Employee_type :  ${it.employee_type}")
+            Text("Email : ${it.distance}")
             Spacer(modifier = Modifier.height(5.dp))
-            it.biography?.let { biography ->
-                Text(biography)
-            }
-
-            if (DEBUG_EMPLOYEE_SCREEN) {
-                Text("Uuid : ${it.uuid}")
-                it.photo_url_large?.let { largeImage -> EmployeeImage(largeImage) }
+            it.description?.let { description ->
+                Text(description)
             }
         }
     }
@@ -159,7 +151,7 @@ fun EmployeeImage(url: String) {
         error = painterResource(R.drawable.ic_launcher_foreground),
         contentDescription = "employee image",
         modifier = Modifier
-            .height(150.dp)
+            .height(300.dp)
             .fillMaxWidth()
             .padding(horizontal = 30.dp, vertical = 20.dp),
         contentScale = ContentScale.Crop,
@@ -170,8 +162,8 @@ fun EmployeeImage(url: String) {
 @Preview
 @Composable
 fun MoviesListPreview() {
-    val employees = MockEmployeeDataSet.employees
-    InterviewEienneMoirouxTheme {
+    val employees = MockPlanetDataSet.planets
+    PlanetsTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
         ) {

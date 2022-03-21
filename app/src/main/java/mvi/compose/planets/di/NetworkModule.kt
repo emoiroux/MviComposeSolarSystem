@@ -1,12 +1,12 @@
-package block.interview.takehome.etiennemoiroux.di
+package mvi.compose.planets.di
 
-import block.interview.takehome.etiennemoiroux.data.IEmployeesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import mvi.compose.planets.data.IPlanetService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://s3.amazonaws.com/sq-mobile-interview/"
+    private const val BASE_URL = "https://indicators-27b95.web.app/planets/"
 
     @Singleton
     @Provides
@@ -41,6 +41,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideEmployeeService(retrofit: Retrofit): IEmployeesService =
-        retrofit.create(IEmployeesService::class.java)
+    fun providePlanetService(retrofit: Retrofit): IPlanetService =
+        retrofit.create(IPlanetService::class.java)
 }

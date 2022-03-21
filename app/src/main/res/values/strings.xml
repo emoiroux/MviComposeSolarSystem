@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">InterviewEienneMoiroux</string>
-    <!-- Strings used for fragments for navigation -->
-
+    <string name="app_name">MviComposePlanets</string>
     <string name="title_activity_main">MainActivity</string>
 </resources>

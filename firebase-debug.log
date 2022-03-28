@@ -1,0 +1,21 @@
+[debug] [2022-03-28T17:17:14.281Z] ----------------------------------------------------------------------
+[debug] [2022-03-28T17:17:14.283Z] Command:       /usr/local/Cellar/node/16.4.2/bin/node /usr/local/bin/firebase init
+[debug] [2022-03-28T17:17:14.283Z] CLI Version:   10.5.0
+[debug] [2022-03-28T17:17:14.283Z] Platform:      darwin
+[debug] [2022-03-28T17:17:14.283Z] Node Version:  v16.4.2
+[debug] [2022-03-28T17:17:14.284Z] Time:          Mon Mar 28 2022 14:17:14 GMT-0300 (Atlantic Daylight Time)
+[debug] [2022-03-28T17:17:14.284Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-03-28T17:17:14.291Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-03-28T17:17:14.291Z] > authorizing via signed-in user (emoiroux@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/emoiroux@ibm.com/StudioProjects/MviComposeSolarSystem
+

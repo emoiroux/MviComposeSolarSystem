@@ -9,8 +9,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.SemanticsProperties.Password
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.text
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
@@ -98,7 +106,11 @@ fun ReloadButton(reload: () -> Unit) {
             ), modifier = Modifier.align(Alignment.TopCenter)
 
         ) {
-            Text("Refresh")
+            Text("Refresh", Modifier.testTag("refreshid").layoutId("refreshLayoutId").semantics {
+                heading()
+                text = AnnotatedString("refrech id tecxt")
+                contentDescription = "text content description"
+            })
         }
     }
 }
@@ -124,9 +136,14 @@ fun EmployeeCard(it: PlanetModel) {
             modifier = Modifier
                 .padding(15.dp)
         ) {
-            Text("${it.name} | ${it.distance}", Modifier.align(Alignment.CenterHorizontally))
+
+            Text("${it.name} | ${it.distance} MKm", Modifier.align(Alignment.CenterHorizontally)
+                    .testTag("refresh id").layoutId("refreshLayoutId").semantics {
+                    text = AnnotatedString("refresh id text")
+                    contentDescription = "text content description"
+
+                })
             Spacer(modifier = Modifier.height(5.dp))
-            Text("url : ${it.image}")
             it.image?.let { image -> EmployeeImage(image) }
             Spacer(modifier = Modifier.height(5.dp))
             Text("Email : ${it.distance}")

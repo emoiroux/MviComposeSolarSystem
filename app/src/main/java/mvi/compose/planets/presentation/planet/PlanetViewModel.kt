@@ -10,6 +10,9 @@ import mvi.compose.planets.data.IPlanetRepository
 import mvi.compose.planets.presentation.BaseViewModel
 import javax.inject.Inject
 
+
+// reload with screen rotation
+
 @HiltViewModel
 class PlanetViewModel @Inject constructor(
     private val repository: IPlanetRepository,

@@ -18,7 +18,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             PlanetScreen(state = viewModel.state, reload = ::reloadClick)
         }
-        sendIntent(PlanetScreenIntent.Load)
+
+        if (savedInstanceState == null) {
+            sendIntent(PlanetScreenIntent.Load)
+        }
     }
 
     private fun sendIntent(intent: PlanetScreenIntent) {

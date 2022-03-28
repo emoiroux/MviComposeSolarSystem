@@ -105,21 +105,6 @@ class PlanetStateTest {
         }
     }
 
-    @Test
-    fun `test empty state`() {
-        coroutineDispatcher.runBlockingTest {
-            whenever(mockRepository.getPlanet())
-                .thenReturn(Response.success(PlanetResponse(MockPlanetDataSet.planets)))
-        }
-
-        viewModel.state.observeForTesting {
-            assertThat(viewModel.state.value is PlanetScreenState.Loading, iz(true))
-            viewModel.processIntents(PlanetScreenIntent.Load)
-            assertThat(viewModel.state.value is PlanetScreenState.Empty, iz(true))
-            coroutineDispatcher.resumeDispatcher()
-        }
-    }
-
     fun tearDown() {
         Dispatchers.resetMain()
         coroutineDispatcher.cleanupTestCoroutines()

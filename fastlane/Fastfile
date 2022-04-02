@@ -24,6 +24,7 @@ platform :android do
     gradle(task: "compileDebugSources")
     gradle(task: "compileDebugUnitTestSources")
     gradle(task: "compileDebugAndroidTestSources")
+    notify_teams
   end
 
   desc "Execute Android lint"
@@ -51,11 +52,27 @@ platform :android do
       gradle_task: "connectedDebugAndroidTest")
   end
 
-  # Teams
+   def teams_report(url:, success:, title:)
+     teams(title: title,
+         message: "Test project for android",
+         facts:[
+           {
+             "name"=>"Hilt",
+             "value"=>"2.39"
+           },
+           {
+             "name"=>"Jetpack compose",
+             "value"=>"1.1.1"
+           }
+         ],
+         teams_url: url
+     )
+     end
 
+  # Teams
   desc "This is a cloud build test with github action"
   desc ""
-  lane :QA do
+  lane :notify_teams do
     teams_report(url: teams_url_dev, success: true, title: "This is a cloud build test with github action")
   end
 end

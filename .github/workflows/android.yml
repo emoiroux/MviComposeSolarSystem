@@ -22,7 +22,7 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: fastlane teams plugin
+      run: fastlane add_plugin teams
     - name: Run Fastlane Compile Lane        
       run: fastlane compile

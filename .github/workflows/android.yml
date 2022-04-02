@@ -22,6 +22,8 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - name : gem install bundler
+      run: sudo gem install bundler
     - name: update fastlane
       run: bundle exec fastlane -v
     - name: fastlane update_plugins

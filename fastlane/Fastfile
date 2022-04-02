@@ -56,25 +56,41 @@ platform :android do
 
    def teams_report(url:, success:, title:)
      teams(title: title,
-         message: "Test project for android",
+         message: "Build tools & versions used : ",
          facts:[
            {
-             "name"=>"Hilt",
+             "name"=>"Dependency Injection - Hilt",
              "value"=>"2.39"
            },
            {
-             "name"=>"Jetpack compose",
+             "name"=>"Ui - Jetpack compose",
              "value"=>"1.1.1"
-           }
+           },
+           {
+              "name"=>"Image caching - Coil",
+              "value"=>"2.0.0-rc01"
+           },
+           {
+               "name"=>"Retrofit",
+               "value"=>"2.9.0 "
+           },
+           {
+               "name"=>"Rest call - Retrofit",
+               "value"=>"2.9.0 "
+           },
+           {
+               "name"=>"Testing - Mockito",
+               "value"=>"2.9.0 "
+           },
          ],
          teams_url: url
      )
      end
 
   # Teams
-  desc "This is a cloud build test with github action"
+  desc "E.T TEST - This demo android app was built on the Cloud."
   desc ""
   lane :notify_teams do
-    teams_report(url: teams_url_dev, success: true, title: "This is a cloud build test with github action")
+    teams_report(url: teams_url_dev, success: true, title: "E.T TEST - This demo android app was built on the Cloud.")
   end
 end

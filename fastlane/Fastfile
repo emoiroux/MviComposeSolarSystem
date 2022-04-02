@@ -16,6 +16,9 @@
 default_platform(:android)
 
 platform :android do
+
+  teams_url_dev = "https://aircanada.webhook.office.com/webhookb2/fedc16b2-2ecd-4614-ab15-440056ac7cd2@491d83df-1091-40f8-bcf9-b112f9a35fcf/JenkinsCI/e3497e958d9f460e82021bf52e309a34/d113c8dd-bcdf-4cfe-9f82-18c317a215a5"
+
   desc "Compile debug and test sources"
   lane :compile do
     gradle(task: "compileDebugSources")
@@ -46,5 +49,13 @@ platform :android do
       AVD_recreate_new: false,
       AVD_clean_after: false,
       gradle_task: "connectedDebugAndroidTest")
+  end
+
+  # Teams
+
+  desc "This is a cloud build test with github action"
+  desc ""
+  lane :QA do
+    teams_report(url: teams_url_dev, success: true, title: "This is a cloud build test with github action")
   end
 end

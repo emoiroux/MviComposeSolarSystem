@@ -24,6 +24,8 @@ jobs:
       run: chmod +x gradlew
     - name : gem install bundler
       run: sudo gem install bundler
+    - name: sudo gem install fastlane-plugin-teams
+      run: sudo gem install fastlane-plugin-teams
     - name: update fastlane
       run: bundle exec fastlane -v
     - name: fastlane update_plugins

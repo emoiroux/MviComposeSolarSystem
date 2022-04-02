@@ -22,5 +22,9 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - name: update fastlane
+      run: bundle exec fastlane -v
+    - name: fastlane update_plugins
+      run: fastlane update_plugins
     - name: Run Fastlane Compile Lane        
-      run: fastlane compile
+      run: bundle exec fastlane compile

@@ -19,14 +19,14 @@ default_platform(:android)
 
 platform :android do
 
-  teams_url_dev = "https://aircanada.webhook.office.com/webhookb2/fedc16b2-2ecd-4614-ab15-440056ac7cd2@491d83df-1091-40f8-bcf9-b112f9a35fcf/JenkinsCI/e3497e958d9f460e82021bf52e309a34/d113c8dd-bcdf-4cfe-9f82-18c317a215a5"
+  teams_url_dev = "SECRET"
 
   desc "Compile debug and test sources"
   lane :compile do
     gradle(task: "compileDebugSources")
     gradle(task: "compileDebugUnitTestSources")
     gradle(task: "compileDebugAndroidTestSources")
-    notify_teams
+    #notify_teams
   end
 
   desc "Execute Android lint"
@@ -63,7 +63,7 @@ platform :android do
              "value"=>"2.39"
            },
            {
-             "name"=>"Ui - Jetpack compose",
+             "name"=>"UI - Jetpack compose",
              "value"=>"1.1.1"
            },
            {
@@ -71,16 +71,12 @@ platform :android do
               "value"=>"2.0.0-rc01"
            },
            {
-               "name"=>"Retrofit",
-               "value"=>"2.9.0 "
-           },
-           {
                "name"=>"Rest call - Retrofit",
                "value"=>"2.9.0 "
            },
            {
                "name"=>"Testing - Mockito",
-               "value"=>"2.9.0 "
+               "value"=>"3.3.3"
            },
          ],
          teams_url: url
